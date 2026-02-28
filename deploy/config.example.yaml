@@ -1,0 +1,39 @@
+# CodeDebate 生产配置模板
+# 复制为 config.yaml 后修改
+
+providers:
+  openai:
+    enabled: true
+    api_key: ${OPENAI_API_KEY}
+
+defaults:
+  max_rounds: 2
+  output_format: markdown
+  check_convergence: true
+  skip_permissions: true
+  structurize_mode: legacy
+
+reviewers:
+  security:
+    model: gpt-4o
+    prompt: "You are a security-focused code reviewer. Focus on vulnerabilities, injection risks, and authentication issues."
+  quality:
+    model: gpt-4o
+    prompt: "You are a code quality reviewer. Focus on maintainability, readability, and best practices."
+
+analyzer:
+  model: gpt-4o
+  prompt: "You are a code analysis expert. Analyze the code changes and identify potential issues."
+
+summarizer:
+  model: gpt-4o
+  prompt: "You are a review summarizer. Consolidate the review findings into a clear, actionable summary."
+
+platform:
+  type: gitlab
+  host: gitlab.com
+
+checkout:
+  enabled: true
+  baseDir: /root/.codedebate/repos
+  ttl: 24h

@@ -1,0 +1,49 @@
+You are processing reviewer "{{.ReviewerID}}" at debate round {{.Round}}.
+
+Reviewer output in this round:
+---
+{{.RoundContent}}
+---
+
+{{- if .LedgerSummary}}
+Previously tracked active issues for this reviewer:
+{{.LedgerSummary}}
+{{- else}}
+There are no previously tracked issues for this reviewer.
+{{- end}}
+
+{{- if .CanonicalSummary}}
+Canonical issues already tracked across reviewers (use `issueRef` from the last column when needed):
+{{.CanonicalSummary}}
+{{- else}}
+There are no previously tracked canonical issues across reviewers.
+{{- end}}
+
+Extract only the delta for this round:
+- "add": newly raised issues
+- "retract": IDs explicitly withdrawn in this round
+- "update": field updates for existing IDs
+- "support": canonical `issueRef`s from the summary above that this reviewer independently supports
+- "withdraw": canonical `issueRef`s that this reviewer previously supported but now withdraws
+- "contest": canonical `issueRef`s that this reviewer explicitly disagrees with or believes are unsupported
+
+Output MUST follow this schema:
+
+```json
+{{.Schema}}
+```
+
+Rules:
+- Output ONLY a fenced JSON block (no other text).
+- Reuse only existing IDs in "retract" and "update".
+- Do not invent IDs for "add"; local code assigns them later.
+- Reuse only `issueRef` values that appear in the canonical issue summary for "support", "withdraw", and "contest".
+- Do not use "support" for a brand-new issue added in this same round.
+- Use "add/update/retract" for this reviewer's local ledger; use "support/withdraw/contest" only for canonical cross-reviewer attribution.
+- If no changes exist, output empty arrays for add/retract/update/support/withdraw/contest.
+- Keep file paths concrete and include line when available.
+- Severity must be one of: critical, high, medium, low, nitpick.
+{{- if .Language}}
+- IMPORTANT: Write "title", "description", and "suggestedFix" in {{.Language}}.
+  Keep JSON keys, severity values, and category values in English.
+{{- end}}

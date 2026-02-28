@@ -1,0 +1,22 @@
+Based on these code review discussions, extract ALL concrete issues mentioned by the reviewers into a structured JSON format.
+
+{{.ReviewText}}
+
+Your output MUST be a valid JSON block conforming to this schema:
+
+```json
+{{.Schema}}
+```
+
+Output ONLY a fenced JSON block (no other text).
+
+Rules:
+- Include every issue mentioned by any reviewer
+- The "description" field will be posted as a review comment. Make it comprehensive markdown covering: (1) What the problem is, (2) Why it matters (impact/risk), (3) The original problematic code quoted in a code block, (4) The suggested fix shown as code, (5) Why the fix is correct
+- If multiple reviewers mention the same issue, list all their IDs in raisedBy
+- Use the exact reviewer IDs: {{.ReviewerIDs}}
+- IMPORTANT: Always include the "file" field with the full path and the "line" field with the exact line number from the reviewer's text. Search the review text carefully for line references (e.g. "line 42", "L42", ":42", "at 42"). If you truly cannot find a line number, omit the "line" field, but try hard to find one.
+- Severity: critical = blocks merge, high = should fix, medium = worth fixing, low = minor, nitpick = style only
+{{- if .Language}}
+- IMPORTANT: Write the "title", "description", and "suggestedFix" fields in {{.Language}}. All JSON keys, "severity" values, and "category" values MUST remain in English.
+{{- end}}

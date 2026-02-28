@@ -1,0 +1,29 @@
+# Mock config for e2e testing - no real AI calls
+mock: true
+
+providers:
+  claude-code:
+    enabled: true
+  codex-cli:
+    enabled: true
+
+defaults:
+  max_rounds: 5
+  output_format: markdown
+  check_convergence: true
+
+analyzer:
+  model: mock-analyzer
+  prompt: "Analyze the code changes."
+
+summarizer:
+  model: mock-summarizer
+  prompt: "Summarize the review."
+
+reviewers:
+  mock-reviewer-a:
+    model: mock-a
+    prompt: "Review code for correctness."
+  mock-reviewer-b:
+    model: mock-b
+    prompt: "Review code for security."

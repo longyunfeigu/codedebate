@@ -1,0 +1,10 @@
+services:
+  codedebate:
+    build: .
+    ports:
+      - "8080:8080"
+    env_file:
+      - deploy/.env
+    volumes:
+      - ./deploy/config.yaml:/root/.codedebate/config.yaml:ro
+    restart: unless-stopped

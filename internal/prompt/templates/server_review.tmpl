@@ -1,0 +1,20 @@
+Please review {{.MRURL}}.
+
+Title: {{.Title}}
+
+Description:
+{{.Description}}
+
+Here is the full diff (each line is prefixed with its new-file line number for reference):
+
+```diff
+{{.Diff}}
+```
+
+Analyze these changes and provide your feedback. You already have the complete diff above — do NOT attempt to fetch it again.
+When reporting issues, always reference the line number shown at the beginning of each line (e.g. "line 263").
+{{if .HasLocalRepo}}
+
+Note: The full repository source code is available in your working directory.
+You can browse files, read implementations, and examine the broader codebase context beyond the diff.
+{{end}}

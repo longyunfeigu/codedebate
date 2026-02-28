@@ -1,0 +1,7 @@
+.git
+.github
+.claude
+testdata
+docs
+*.md
+deploy/.env

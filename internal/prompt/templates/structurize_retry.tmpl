@@ -1,0 +1,16 @@
+Your previous output had validation errors:
+
+{{.ValidationErrors}}
+
+Please fix these errors. Here are the review discussions again:
+
+{{.ReviewText}}
+
+Your output MUST be a valid JSON block conforming to this schema:
+
+```json
+{{.Schema}}
+```
+
+Output ONLY a fenced JSON block (no other text).
+Use reviewer IDs: {{.ReviewerIDs}}
